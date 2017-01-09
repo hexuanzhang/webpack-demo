@@ -7,6 +7,7 @@ let path = require("path"),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     HtmlWebpackPlugin = require("html-webpack-plugin"),
     CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
+	DllReferencePlugin = webpack.DllReferencePlugin,
     UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 
@@ -96,9 +97,16 @@ let  config = {
 	        }),
 	        // UglifyJsPlugin 插件非常消耗构建性能,不建议在开发环境开启
 	        // new UglifyJsPlugin({
+	        // 	output: {
+	        // 	    comments: false
+		     //    },
 		     //    compress: {
 			 //        warnings: false
 		     //    }
+	        // }),
+	        // new DllReferencePlugin({
+	        // 	context: __dirname,
+		     //    manifest: require("./dist/dll/manifest.json")
 	        // }),
             new ExtractTextPlugin(
                 "style/style.css",  // 相对于 output.path 路径
@@ -111,9 +119,9 @@ let  config = {
                 fileName: "common.js"
             })
         ],
-		// 配置 externals 来将依赖的库指向全局变量，从而不再打包这个库
+		// 声明依赖资源为一个外部依赖,通过外链脚本引入,将依赖的库指向全局变量，从而不需要解析和编译至模块的内部文件
 		externals: {
-            "react": "React"
+            //"react": "React"
 		},
 		devTool: options.o || "source-map",
         devServer: {
