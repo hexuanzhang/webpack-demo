@@ -3,6 +3,7 @@ let path = require("path"),
     webpack = require("webpack"),
     glob = require("glob"),
     yargs = require("yargs"),
+	autoprefixer = require('autoprefixer'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     HtmlWebpackPlugin = require("html-webpack-plugin"),
     CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
@@ -53,12 +54,16 @@ let  config = {
                     }
                 },
 	            {
+	                test: /\.(png|jp(e)?g)$/,
+		            loader: "url?limit=8192&name=../img/[name].[hash:5].[ext]"
+	            },
+	            {
 	            	test: /\.css$/,
-		            loader: ExtractTextPlugin.extract("style", "css")
+		            loader: ExtractTextPlugin.extract("style", ["css", "postcss"])
 	            },
                 {
                     test: /\.less$/,
-                    loader: ExtractTextPlugin.extract("style", ["css", "less"])
+                    loader: ExtractTextPlugin.extract("style", ["css", "postcss","less"])
                 }
             ],
             preLoaders: [
@@ -78,10 +83,19 @@ let  config = {
 
             }
         },
+		postcss: () => {
+			return {
+				defaults: [
+					autoprefixer()
+				]
+			}
+		},
         plugins: [
             new ExtractTextPlugin(
                 "style/style.css",  // 相对于 output.path 路径
-                 { allChunks: true }
+                 {
+                     allChunks: false
+                 }
             ),
             new CommonsChunkPlugin({
                 name: "common",

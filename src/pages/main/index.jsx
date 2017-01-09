@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import { Link } from "react-router";
+import { Link, IndexLink } from "react-router";
 import { Page } from "../../config";
 
 export default class Main extends React.Component {
@@ -30,18 +30,19 @@ export default class Main extends React.Component {
 	
 	render() {
 		let { children } = this.props;
+		console.info("render");
 		
 		return (
 			<div className="container">
 				<ul className="nav nav-tabs nav-justified">
-					<li className="active">
-						<Link data-toggle="tab" to="/">首页</Link>
+					<li className="active" data-toggle="tab">
+						<IndexLink activeClassName="active" to="/" onlyActiveOnIndex={true}>首页</IndexLink>
 					</li>
 					<li>
-						<Link to={ Page.message }>内容</Link>
+						<Link activeClassName="active" to={ Page.message }>内容</Link>
 					</li>
 					<li>
-						<Link to={ Page.about }>关于我</Link>
+						<Link activeClassName="active" to={ Page.about }>关于我</Link>
 					</li>
 				</ul>
 				<div className="tab-content">

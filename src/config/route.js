@@ -5,6 +5,7 @@
  */
 export const Page = {
 	main: "/",
+	index: "/index",
 	message: "/message",
 	about: "/about"
 };
