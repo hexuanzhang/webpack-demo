@@ -91,10 +91,19 @@ let  config = {
 			}
 		},
         plugins: [
+	        new webpack.DefinePlugin({
+		        "_o_": options.o
+	        }),
+	        // UglifyJsPlugin 插件非常消耗构建性能,不建议在开发环境开启
+	        // new UglifyJsPlugin({
+		     //    compress: {
+			 //        warnings: false
+		     //    }
+	        // }),
             new ExtractTextPlugin(
                 "style/style.css",  // 相对于 output.path 路径
                  {
-                     allChunks: false
+                     allChunks: true
                  }
             ),
             new CommonsChunkPlugin({
@@ -102,6 +111,11 @@ let  config = {
                 fileName: "common.js"
             })
         ],
+		// 配置 externals 来将依赖的库指向全局变量，从而不再打包这个库
+		externals: {
+            "react": "React"
+		},
+		devTool: options.o || "source-map",
         devServer: {
             publicPath: OUTPUT_PATH
         }

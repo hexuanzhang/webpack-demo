@@ -6,6 +6,8 @@ import { Page } from "../../config";
 export default class Main extends React.Component {
 	
 	componentDidMount() {
+		_o_ || console.info("开发环境");
+		
 		$(".nav li").on("click", (event) => {
 			$(event.target).parent().addClass("active").siblings().removeClass("active");
 		})
@@ -14,7 +16,6 @@ export default class Main extends React.Component {
 	componentWillReceiveProps(nextPorps) {
 		let { location, routes } = nextPorps;
 		
-		console.dir(routes);
 		if (location && location.pathname === '/') {
 		}
 		
@@ -30,7 +31,6 @@ export default class Main extends React.Component {
 	
 	render() {
 		let { children } = this.props;
-		console.info("render");
 		
 		return (
 			<div className="container">
