@@ -56,7 +56,7 @@ let  config = {
                 },
 	            {
 	                test: /\.(png|jp(e)?g)$/,
-		            loader: "url?limit=8192&name=../img/[name].[hash:5].[ext]"
+		            loader: "url?limit=8192&name=../img/[name].[ext]"
 	            },
 	            {
 	            	test: /\.css$/,
@@ -117,7 +117,11 @@ let  config = {
             new CommonsChunkPlugin({
                 name: "common",
                 fileName: "common.js"
-            })
+            }),
+	        new HtmlWebpackPlugin({
+	        	title: "test",
+		        filename: 'index.html'
+	        })
         ],
 		// 声明依赖资源为一个外部依赖,通过外链脚本引入,将依赖的库指向全局变量，从而不需要解析和编译至模块的内部文件
 		externals: {
